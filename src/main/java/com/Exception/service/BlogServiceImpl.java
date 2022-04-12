@@ -1,5 +1,6 @@
 package com.Exception.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class BlogServiceImpl implements BlogService {
 	public Blog saveBlog(Blog blog) {
 
 		if (blogRepository.existsById(blog.getBlogId())) {
-			
+
 			throw new BlogAlreadyExistsException();
 		}
 		Blog savedBlog = blogRepository.save(blog);
@@ -29,21 +30,23 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public List<Blog> getAllBlogs() {
-		return (List<Blog>) blogRepository.findAll();
+		List<Blog> bloglist = new ArrayList<Blog>();
+
+		blogRepository.findAll().forEach(list -> bloglist.add(list));
+		return bloglist;
 	}
 
 	@Override
 	public Blog getBlogById(int id) throws BlogNotFoundException {
 		Blog blog;
 		if (blogRepository.findById(id).isEmpty()) {
-			
+
 			throw new BlogNotFoundException();
-		} 
-		else 
-		{
+		} else {
 			blog = blogRepository.findById(id).get();
 		}
 		return blog;
+
 	}
 
 }
