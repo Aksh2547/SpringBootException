@@ -29,13 +29,13 @@ public class BlogController {
 	public ResponseEntity<Blog> saveBlog(@RequestBody Blog blog) throws BlogAlreadyExistsException {
 
 		Blog savedBlog = blogService.saveBlog(blog);
-		return new ResponseEntity<>(savedBlog, HttpStatus.CREATED);
+		return new ResponseEntity<Blog>(savedBlog, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/blogs")
-	public ResponseEntity<List<Blog>> getAllBlogs() throws BlogNotFoundException {
+	public ResponseEntity<List> getAllBlogs() throws BlogNotFoundException {
 		
-		return new ResponseEntity<List<Blog>>(blogService.getAllBlogs(), HttpStatus.OK);
+		return new ResponseEntity<List>(blogService.getAllBlogs(), HttpStatus.OK);
 	}
 
 	@GetMapping("blog/{id}")
